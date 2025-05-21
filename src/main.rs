@@ -4,6 +4,11 @@ fn main() {
   let root_area = BitMapBackend::new("images/2.5.png", (600, 400)).into_drawing_area();
   root_area.fill(&WHITE).unwrap();
 
+  match std::env::current_dir() {
+    Ok(path) => println!("{}", path.display()),
+    Err(e) => eprintln!("現在のディレクトリの取得に失敗しました: {}", e),
+  }
+
   let mut ctx = ChartBuilder::on(&root_area)
     .set_label_area_size(LabelAreaPosition::Left, 40)
     .set_label_area_size(LabelAreaPosition::Bottom, 40)
