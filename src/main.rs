@@ -1,13 +1,15 @@
 // filepath: /rust-1d-fem/rust-1d-fem/src/main.rs
 
 fn main() {
-  let x_min = -1.0; // Calculation domain minimum
-  let x_max = 1.0; // Calculation domain maximum
-  let node_total = 4; // Number of nodes (>=2)
-  let ele_total = node_total - 1; // Number of elements
-  let func_f = 1.0; // Constant function f
-  let alpha = 1.0; // Dirichlet boundary condition at the left end
-  let beta = -1.0; // Neumann boundary condition at the right end
+  let x_min: f64 = -1.0; // Calculation domain minimum
+  let x_max: f64 = 1.0; // Calculation domain maximum
+  let node_total: i32 = 4; // Number of nodes (>=2)
+  let ele_total: i32 = node_total - 1; // Number of elements
+  let func_f: f64 = 1.0; // Constant function f
+  let alpha: f64 = 1.0; // Dirichlet boundary condition at the left end
+  let beta: f64 = -1.0; // Neumann boundary condition at the right end
+
+  // ----------------------------- //
 
   let node_x_glo = (0..node_total).map(|i| x_min + i as f64 * (x_max - x_min) / (node_total - 1) as f64).collect::<Vec<f64>>();
 
@@ -59,7 +61,7 @@ fn main() {
 
 // Function to apply boundary conditions
 fn boundary(node_num_glo: usize, dirichlet: f64, neumann: f64, mat_a_glo: &mut Vec<Vec<f64>>, vec_b_glo: &mut Vec<f64>) {
-  if dirichlet != f64::INFINITY {
+  if dirichlet.is_finite() {
     vec_b_glo.iter_mut().for_each(|b| *b -= dirichlet * mat_a_glo[node_num_glo][node_num_glo]);
     vec_b_glo[node_num_glo] = dirichlet;
     for j in 0..mat_a_glo.len() {
