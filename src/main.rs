@@ -43,7 +43,7 @@ fn main() {
 
   // Apply boundary conditions
   boundary(0, alpha, 0.0, &mut mat_a_glo, &mut vec_b_glo);
-  boundary(node_total - 1, "inf", beta, &mut mat_a_glo, &mut vec_b_glo);
+  boundary(node_total - 1, f64::INFINITY, beta, &mut mat_a_glo, &mut vec_b_glo);
 
   // Solve the linear system
   let unknown_vec_u = solve(&mat_a_glo, &vec_b_glo);
@@ -75,7 +75,7 @@ fn boundary(node_num_glo: usize, dirichlet: f64, neumann: f64, mat_a_glo: &mut V
 }
 
 // Function to solve the linear system
-fn solve(mat_a_glo: &Vec<Vec<f64>>, vec_b_glo: &Vec<f64>) -> Vec<f64> {
+fn solve(_mat_a_glo: &Vec<Vec<f64>>, vec_b_glo: &Vec<f64>) -> Vec<f64> {
   // Implement a solver for the linear system here (e.g., Gaussian elimination)
   // Placeholder for the actual implementation
   vec![0.0; vec_b_glo.len()] // Replace with actual solution
